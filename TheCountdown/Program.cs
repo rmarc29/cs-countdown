@@ -1,6 +1,8 @@
 using System;
 using System.Drawing;
+using System.Media;
 using System.Windows.Forms;
+using NAudio.Wave;
 
 namespace CountdownTimerApp
 {
@@ -145,6 +147,7 @@ namespace CountdownTimerApp
             {
                 timer.Stop();
                 lblCountdown.Text = "Time's up!";
+                PlaySound(); // Play the sound when the timer ends
             }
         }
 
@@ -181,6 +184,42 @@ namespace CountdownTimerApp
             }
         }
 
+        private void PlaySound()
+        {
+            PlaySoundWithTrim(0.1f, 5.0f); // $1 = startTimeInSeconds, $2 = durationInSeconds
+        }
+
+
+        private void PlaySoundWithTrim(float startTimeInSeconds, float durationInSeconds)
+        {
+            try
+            {
+                string filePath = "Resources/beep.wav"; // Path to audio file
+                var audioFile = new AudioFileReader(filePath);
+                var outputDevice = new WaveOutEvent();
+
+                // Set playback start position
+                audioFile.CurrentTime = TimeSpan.FromSeconds(startTimeInSeconds);
+
+                outputDevice.Init(audioFile);
+                outputDevice.Play();
+
+                // Stop playback after the specified duration
+                System.Timers.Timer stopTimer = new System.Timers.Timer(durationInSeconds * 1000);
+                stopTimer.Elapsed += (s, e) =>
+                {
+                    outputDevice.Stop();
+                    stopTimer.Dispose();
+                };
+                stopTimer.Start();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error playing sound: {ex.Message}");
+            }
+        }
+
+
         private bool ParseTimeInput(string input, out TimeSpan duration)
         {
             duration = TimeSpan.Zero;
@@ -193,6 +232,7 @@ namespace CountdownTimerApp
 
                 duration = unit switch
                 {
+                    's' => TimeSpan.FromSeconds(value),
                     'm' => TimeSpan.FromMinutes(value),
                     'h' => TimeSpan.FromHours(value),
                     'd' => TimeSpan.FromDays(value),

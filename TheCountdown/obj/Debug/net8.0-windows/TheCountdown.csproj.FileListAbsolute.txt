@@ -12,3 +12,13 @@ C:\Users\Romain\Desktop\Timer\TheCountdown\obj\Debug\net8.0-windows\refint\TheCo
 C:\Users\Romain\Desktop\Timer\TheCountdown\obj\Debug\net8.0-windows\TheCountdown.pdb
 C:\Users\Romain\Desktop\Timer\TheCountdown\obj\Debug\net8.0-windows\TheCountdown.genruntimeconfig.cache
 C:\Users\Romain\Desktop\Timer\TheCountdown\obj\Debug\net8.0-windows\ref\TheCountdown.dll
+C:\Users\Romain\Desktop\Timer\TheCountdown\obj\Debug\net8.0-windows\TheCountdown.sourcelink.json
+C:\Users\Romain\Desktop\Timer\TheCountdown\bin\Debug\net8.0-windows\NAudio.dll
+C:\Users\Romain\Desktop\Timer\TheCountdown\bin\Debug\net8.0-windows\NAudio.Asio.dll
+C:\Users\Romain\Desktop\Timer\TheCountdown\bin\Debug\net8.0-windows\NAudio.Core.dll
+C:\Users\Romain\Desktop\Timer\TheCountdown\bin\Debug\net8.0-windows\NAudio.Midi.dll
+C:\Users\Romain\Desktop\Timer\TheCountdown\bin\Debug\net8.0-windows\NAudio.Wasapi.dll
+C:\Users\Romain\Desktop\Timer\TheCountdown\bin\Debug\net8.0-windows\NAudio.WinForms.dll
+C:\Users\Romain\Desktop\Timer\TheCountdown\bin\Debug\net8.0-windows\NAudio.WinMM.dll
+C:\Users\Romain\Desktop\Timer\TheCountdown\obj\Debug\net8.0-windows\TheCountdown.csproj.AssemblyReference.cache
+C:\Users\Romain\Desktop\Timer\TheCountdown\obj\Debug\net8.0-windows\TheCount.CFB3AAA5.Up2Date
