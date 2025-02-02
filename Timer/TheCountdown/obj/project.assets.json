@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Romain\\Desktop\\Timer\\TheCountdown\\TheCountdown.csproj",
+      "projectUniqueName": "C:\\Users\\Romain\\Desktop\\Timer\\Timer\\TheCountdown\\TheCountdown.csproj",
       "projectName": "TheCountdown",
-      "projectPath": "C:\\Users\\Romain\\Desktop\\Timer\\TheCountdown\\TheCountdown.csproj",
+      "projectPath": "C:\\Users\\Romain\\Desktop\\Timer\\Timer\\TheCountdown\\TheCountdown.csproj",
       "packagesPath": "C:\\Users\\Romain\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Romain\\Desktop\\Timer\\TheCountdown\\obj\\",
+      "outputPath": "C:\\Users\\Romain\\Desktop\\Timer\\Timer\\TheCountdown\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Romain\\AppData\\Roaming\\NuGet\\NuGet.Config"

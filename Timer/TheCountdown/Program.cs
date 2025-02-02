@@ -18,8 +18,8 @@ namespace CountdownTimerApp
         public CountdownTimerForm()
         {
             // Initialize components
-            this.Text = "Countdown Timer";
-            this.Size = new Size(400, 300);
+            this.Text = "Countdown";
+            this.Size = new Size(600, 400);
 
             // Event Name
             txtEventName = new TextBox { PlaceholderText = "Event Name", Location = new Point(20, 20), Width = 200 };
@@ -33,7 +33,7 @@ namespace CountdownTimerApp
             pictureBox = new PictureBox
             {
                 BorderStyle = BorderStyle.FixedSingle,
-                Location = new Point(250, 20),
+                Location = new Point(300, 20),
                 Size = new Size(100, 100),
                 BackColor = Color.LightGray
             };
@@ -67,7 +67,7 @@ namespace CountdownTimerApp
             btnMiniMode.Click += BtnMiniMode_Click;
             this.Controls.Add(btnMiniMode);
 
-            btnRemovePicture = new Button { Text = "Remove Picture", Location = new Point(260, 200) };
+            btnRemovePicture = new Button { Text = "Remove Picture", Location = new Point(300, 200), Width = 150 };
             btnRemovePicture.Click += BtnRemovePicture_Click;
             this.Controls.Add(btnRemovePicture);
 
@@ -82,9 +82,10 @@ namespace CountdownTimerApp
             this.Controls.Add(btnToggleMode);
 
             // Pick Background Color Button
-            btnPickColor = new Button { Text = "Pick Background Color", Location = new Point(130, 200), Width = 120 };
-            btnPickColor.Click += BtnPickColor_Click;
-            this.Controls.Add(btnPickColor);
+            btnPickColor = new Button { 
+                Text = "Pick Background Color", Location = new Point(130, 200), Width = 150 };
+                btnPickColor.Click += BtnPickColor_Click;
+                this.Controls.Add(btnPickColor);
 
             // Timer setup
             timer = new System.Windows.Forms.Timer();
