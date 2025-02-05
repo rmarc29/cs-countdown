@@ -20,70 +20,86 @@ namespace CountdownTimerApp
             this.Size = new Size(600, 400);
             this.MinimumSize = new Size(400, 300);
 
-            txtEventName = new TextBox { PlaceholderText = "Event Name", Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right, Location = new Point(20, 20), Width = 200 };
-            this.Controls.Add(txtEventName);
+            TableLayoutPanel layout = new TableLayoutPanel
+            {
+                Dock = DockStyle.Fill,
+                ColumnCount = 3,
+                RowCount = 4,
+                AutoSize = true
+            };
+            layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33));
+            layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 34));
+            layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33));
+            layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+            layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+            layout.RowStyles.Add(new RowStyle(SizeType.Percent, 50));
+            layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+            this.Controls.Add(layout);
 
-            txtTimeInput = new TextBox { PlaceholderText = "Enter time (e.g., '7d', '3w', '2m', '30s')", Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right, Location = new Point(20, 60), Width = 200 };
-            this.Controls.Add(txtTimeInput);
+            txtEventName = new TextBox { PlaceholderText = "Event Name", Dock = DockStyle.Fill };
+            layout.Controls.Add(txtEventName, 0, 0);
+            layout.SetColumnSpan(txtEventName, 2);
+
+            txtTimeInput = new TextBox { PlaceholderText = "Enter time (e.g., '7d', '3w', '2m', '30s')", Dock = DockStyle.Fill };
+            layout.Controls.Add(txtTimeInput, 0, 1);
+            layout.SetColumnSpan(txtTimeInput, 2);
 
             pictureBox = new PictureBox
             {
                 BorderStyle = BorderStyle.FixedSingle,
-                Location = new Point(300, 20),
                 Size = new Size(100, 100),
                 BackColor = Color.LightGray,
-                Anchor = AnchorStyles.Top | AnchorStyles.Right
+                Dock = DockStyle.Fill
             };
             pictureBox.Click += PictureBox_Click;
-            this.Controls.Add(pictureBox);
+            layout.Controls.Add(pictureBox, 2, 0);
+            layout.SetRowSpan(pictureBox, 2);
 
             lblCountdown = new Label
             {
                 Text = "00:00:00",
                 Font = new Font("Arial", 24),
-                Location = new Point(20, 100),
                 AutoSize = true,
-                Anchor = AnchorStyles.Left | AnchorStyles.Right
+                Dock = DockStyle.Fill,
+                TextAlign = ContentAlignment.MiddleCenter
             };
-            this.Controls.Add(lblCountdown);
+            layout.Controls.Add(lblCountdown, 0, 2);
+            layout.SetColumnSpan(lblCountdown, 3);
 
-            btnStart = new Button { Text = "Start", Location = new Point(20, 150), Anchor = AnchorStyles.Left | AnchorStyles.Bottom };
+            FlowLayoutPanel buttonPanel = new FlowLayoutPanel { Dock = DockStyle.Fill, AutoSize = true };
+            layout.Controls.Add(buttonPanel, 0, 3);
+            layout.SetColumnSpan(buttonPanel, 3);
+
+            btnStart = new Button { Text = "Start" };
             btnStart.Click += BtnStart_Click;
-            this.Controls.Add(btnStart);
+            buttonPanel.Controls.Add(btnStart);
 
-            btnStop = new Button { Text = "Stop", Location = new Point(100, 150), Anchor = AnchorStyles.Left | AnchorStyles.Bottom };
+            btnStop = new Button { Text = "Stop" };
             btnStop.Click += BtnStop_Click;
-            this.Controls.Add(btnStop);
+            buttonPanel.Controls.Add(btnStop);
 
-            btnReset = new Button { Text = "Reset", Location = new Point(180, 150), Anchor = AnchorStyles.Left | AnchorStyles.Bottom };
+            btnReset = new Button { Text = "Reset" };
             btnReset.Click += BtnReset_Click;
-            this.Controls.Add(btnReset);
+            buttonPanel.Controls.Add(btnReset);
 
-            btnMiniMode = new Button { Text = "Mini Mode", Location = new Point(260, 150), Anchor = AnchorStyles.Left | AnchorStyles.Bottom };
+            btnMiniMode = new Button { Text = "Mini Mode" };
             btnMiniMode.Click += BtnMiniMode_Click;
-            this.Controls.Add(btnMiniMode);
+            buttonPanel.Controls.Add(btnMiniMode);
 
-            btnRemovePicture = new Button { Text = "Remove Picture", Location = new Point(300, 200), Width = 150, Anchor = AnchorStyles.Bottom | AnchorStyles.Right };
+            btnRemovePicture = new Button { Text = "Remove Picture" };
             btnRemovePicture.Click += BtnRemovePicture_Click;
-            this.Controls.Add(btnRemovePicture);
+            buttonPanel.Controls.Add(btnRemovePicture);
 
-            btnToggleMode = new Button { Text = "Toggle Mode", Location = new Point(20, 200), Width = 100, Anchor = AnchorStyles.Bottom | AnchorStyles.Left };
+            btnToggleMode = new Button { Text = "Toggle Mode" };
             btnToggleMode.Click += BtnMiniMode_Click;
-            this.Controls.Add(btnToggleMode);
+            buttonPanel.Controls.Add(btnToggleMode);
 
-            btnPickColor = new Button { Text = "Pick Background Color", Location = new Point(130, 200), Width = 150, Anchor = AnchorStyles.Bottom | AnchorStyles.Left };
+            btnPickColor = new Button { Text = "Pick Background Color" };
             btnPickColor.Click += BtnPickColor_Click;
-            this.Controls.Add(btnPickColor);
+            buttonPanel.Controls.Add(btnPickColor);
 
             timer = new System.Windows.Forms.Timer { Interval = 1000 };
             timer.Tick += Timer_Tick;
-
-            this.Resize += CountdownTimerForm_Resize;
-        }
-
-        private void CountdownTimerForm_Resize(object sender, EventArgs e)
-        {
-            lblCountdown.Left = (this.ClientSize.Width - lblCountdown.Width) / 2;
         }
 
         private void PictureBox_Click(object sender, EventArgs e)
@@ -105,23 +121,7 @@ namespace CountdownTimerApp
         private void BtnMiniMode_Click(object sender, EventArgs e)
         {
             isMiniMode = !isMiniMode;
-            if (isMiniMode)
-            {
-                this.Size = new Size(200, 100);
-                lblCountdown.Location = new Point(20, 20);
-                foreach (Control control in this.Controls)
-                {
-                    if (control != lblCountdown && control != btnToggleMode) control.Visible = false;
-                }
-            }
-            else
-            {
-                this.Size = new Size(600, 400);
-                foreach (Control control in this.Controls)
-                {
-                    control.Visible = true;
-                }
-            }
+            this.Size = isMiniMode ? new Size(200, 100) : new Size(600, 400);
         }
 
         private void BtnPickColor_Click(object sender, EventArgs e)
