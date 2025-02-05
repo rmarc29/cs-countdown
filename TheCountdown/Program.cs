@@ -6,10 +6,17 @@ namespace CountdownTimerApp
 {
     public class CountdownTimerForm : Form
     {
-        private TextBox txtTimeInput, txtEventName;
+        private TextBox txtTimeInput,
+            txtEventName;
         private PictureBox pictureBox;
         private Label lblCountdown;
-        private Button btnStart, btnStop, btnReset, btnMiniMode, btnRemovePicture, btnToggleMode, btnPickColor;
+        private Button btnStart,
+            btnStop,
+            btnReset,
+            btnMiniMode,
+            btnRemovePicture,
+            btnToggleMode,
+            btnPickColor;
         private System.Windows.Forms.Timer timer;
         private DateTime endTime;
         private bool isMiniMode = false;
@@ -40,7 +47,11 @@ namespace CountdownTimerApp
             layout.Controls.Add(txtEventName, 0, 0);
             layout.SetColumnSpan(txtEventName, 2);
 
-            txtTimeInput = new TextBox { PlaceholderText = "Enter time (e.g., '7d', '3w', '2m', '30s')", Dock = DockStyle.Fill };
+            txtTimeInput = new TextBox
+            {
+                PlaceholderText = "Enter time (e.g., '7d', '3w', '2m', '30s')",
+                Dock = DockStyle.Fill
+            };
             layout.Controls.Add(txtTimeInput, 0, 1);
             layout.SetColumnSpan(txtTimeInput, 2);
 
@@ -66,7 +77,11 @@ namespace CountdownTimerApp
             layout.Controls.Add(lblCountdown, 0, 2);
             layout.SetColumnSpan(lblCountdown, 3);
 
-            FlowLayoutPanel buttonPanel = new FlowLayoutPanel { Dock = DockStyle.Fill, AutoSize = true };
+            FlowLayoutPanel buttonPanel = new FlowLayoutPanel
+            {
+                Dock = DockStyle.Fill,
+                AutoSize = true
+            };
             layout.Controls.Add(buttonPanel, 0, 3);
             layout.SetColumnSpan(buttonPanel, 3);
 
@@ -104,7 +119,10 @@ namespace CountdownTimerApp
 
         private void PictureBox_Click(object sender, EventArgs e)
         {
-            using OpenFileDialog ofd = new OpenFileDialog { Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp" };
+            using OpenFileDialog ofd = new OpenFileDialog
+            {
+                Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp"
+            };
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 pictureBox.Image = Image.FromFile(ofd.FileName);
@@ -113,10 +131,32 @@ namespace CountdownTimerApp
         }
 
         private void BtnRemovePicture_Click(object sender, EventArgs e) => pictureBox.Image = null;
-        private void BtnStart_Click(object sender, EventArgs e) { if (ParseTimeInput(txtTimeInput.Text, out TimeSpan duration)) { endTime = DateTime.Now.Add(duration); timer.Start(); } else { MessageBox.Show("Invalid time format"); } }
+        private void BtnStart_Click(object sender, EventArgs e)
+        {
+            if (ParseTimeInput(txtTimeInput.Text, out TimeSpan duration))
+            {
+                endTime = DateTime.Now.Add(duration);
+                timer.Start();
+            }
+            else
+            {
+                MessageBox.Show("Invalid time format");
+            }
+        }
         private void BtnStop_Click(object sender, EventArgs e) => timer.Stop();
-        private void BtnReset_Click(object sender, EventArgs e) { timer.Stop(); lblCountdown.Text = "00:00:00"; }
-        private void Timer_Tick(object sender, EventArgs e) { var remaining = endTime - DateTime.Now; lblCountdown.Text = remaining.TotalSeconds > 0 ? remaining.ToString(@"dd\:hh\:mm\:ss") : "Time's up!"; if (remaining.TotalSeconds <= 0) timer.Stop(); }
+        private void BtnReset_Click(object sender, EventArgs e)
+        {
+            timer.Stop();
+            lblCountdown.Text = "00:00:00";
+        }
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            var remaining = endTime - DateTime.Now;
+            lblCountdown.Text =
+                remaining.TotalSeconds > 0 ? remaining.ToString(@"dd\:hh\:mm\:ss") : "Time's up!";
+            if (remaining.TotalSeconds <= 0)
+                timer.Stop();
+        }
 
         private void BtnMiniMode_Click(object sender, EventArgs e)
         {
@@ -136,8 +176,26 @@ namespace CountdownTimerApp
         private bool ParseTimeInput(string input, out TimeSpan duration)
         {
             duration = TimeSpan.Zero;
-            if (string.IsNullOrWhiteSpace(input)) return false;
-            try { int value = int.Parse(input[..^1]); char unit = input[^1]; duration = unit switch { 'm' => TimeSpan.FromMinutes(value), 'h' => TimeSpan.FromHours(value), 'd' => TimeSpan.FromDays(value), 'w' => TimeSpan.FromDays(value * 7), _ => throw new Exception("Invalid unit") }; return true; } catch { return false; }
+            if (string.IsNullOrWhiteSpace(input))
+                return false;
+            try
+            {
+                int value = int.Parse(input[..^1]);
+                char unit = input[^1];
+                duration = unit switch
+                {
+                    'm' => TimeSpan.FromMinutes(value),
+                    'h' => TimeSpan.FromHours(value),
+                    'd' => TimeSpan.FromDays(value),
+                    'w' => TimeSpan.FromDays(value * 7),
+                    _ => throw new Exception("Invalid unit")
+                };
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         [STAThread]
